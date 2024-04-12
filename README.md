@@ -35,19 +35,25 @@ _*This task was developed based on an example from the book by [Adam Freeman Pro
 
 ## Project configuration
 Each project file in the solution must be configured properly:
-1. Your *<PropertyGroup>* should contain next lines  
+1. Your *```xml<PropertyGroup>```* should contain next lines
+```xml  
     <TargetFramework>net8.0</TargetFramework>  
     <EnableNETAnalyzers>true</EnableNETAnalyzers>  
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>  
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>  
     <CodeAnalysisRuleSet>..\code-analysis.ruleset</CodeAnalysisRuleSet>  
-2. You have to add in *<ItemGroup>* with PackageReference next lines  
+```
+2. You have to add in *```xml<ItemGroup>```* with PackageReference next lines
+```xml  
       <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">  
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>  
           <PrivateAssets>all</PrivateAssets>  
       </PackageReference>  
-3. Add next <ItemGroup>  
+```	  
+3. Add next *```xml<ItemGroup>```*
+```xml
   <ItemGroup>  
 		<AdditionalFiles Include="..\code-analysis.ruleset" Link="Properties\code-analysis.ruleset" />  
 		<AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />  
   </ItemGroup>  
+```  
