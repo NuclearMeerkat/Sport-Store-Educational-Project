@@ -13,7 +13,7 @@ As a result of completing this task, you will receive an application that implem
 - an administration area that includes create, read, update, and delete (CRUD) tools for manage directory;
 
 ## .NET Platform
-The task uses the .NET Core CLI command line tool and references applications that target .NET 6.
+The task uses the .NET Core CLI command line tool and references applications that target .NET 8.
 
 Visual Studio 2022 is the most convenient tool to get the task done, however, if your work machine is not configured to run this IDE, development can be done with Visual Studio Code and the .NET Core SDK (or ather IDE).
 
@@ -32,3 +32,22 @@ The task consists of four steps. The description of the each step of the task ar
 After completing all steps you will get the final version of the application in the `main` branch.
 
 _*This task was developed based on an example from the book by [Adam Freeman Pro ASP.NET Core 6: Develop Cloud-Ready Web Applications Using MVC, Blazor, and Razor Pages 9th ed. Edition](https://www.amazon.com/Pro-ASP-NET-Core-Cloud-Ready-Applications/dp/1484279565). If you are having difficulty completing the task, contact the source._
+
+
+Each project file in the solution must be configured properly:
+1. Your *<PropertyGroup>* should contain next lines  
+    <TargetFramework>net8.0</TargetFramework>  
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>  
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>  
+    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>  
+    <CodeAnalysisRuleSet>..\code-analysis.ruleset</CodeAnalysisRuleSet>  
+2. You have to add in *<ItemGroup>* with PackageReference next lines  
+      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">  
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>  
+          <PrivateAssets>all</PrivateAssets>  
+      </PackageReference>  
+3. Add next <ItemGroup>  
+  <ItemGroup>  
+		<AdditionalFiles Include="..\code-analysis.ruleset" Link="Properties\code-analysis.ruleset" />  
+		<AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />  
+  </ItemGroup>  
