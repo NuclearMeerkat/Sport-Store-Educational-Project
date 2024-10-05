@@ -25,12 +25,22 @@ namespace SportsStore.Infrastructure
 
         public string? PageAction { get; set; }
 
+        public bool PageClassesEnabled { get; set; } = false;
+
+        public string PageClass { get; set; } = string.Empty;
+
+        public string PageClassNormal { get; set; } = string.Empty;
+
+        public string PageClassSelected { get; set; } = string.Empty;
+
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             if (this.ViewContext != null && this.PageModel != null)
             {
                 IUrlHelper urlHelper = this.urlHelperFactory.GetUrlHelper(this.ViewContext);
                 TagBuilder result = new TagBuilder("div");
+
                 for (int i = 1; i <= this.PageModel.TotalPages; i++)
                 {
                     TagBuilder tag = new TagBuilder("a");
@@ -38,6 +48,13 @@ namespace SportsStore.Infrastructure
                         new { productPage = i });
                     tag.InnerHtml.Append(i.ToString());
                     result.InnerHtml.AppendHtml(tag);
+                    
+                    if (this.PageClassesEnabled)
+                    {
+                        tag.AddCssClass(this.PageClass);
+                        tag.AddCssClass(i == this.PageModel.CurrentPage
+                            ? this.PageClassSelected : this.PageClassNormal);
+                    }
                 }
 
                 output.Content.AppendHtml(result.InnerHtml);
