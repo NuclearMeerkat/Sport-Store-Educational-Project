@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SportsStore.Models.Repository;
 using SportsStore.Models.ViewModels;
 
@@ -7,9 +8,9 @@ namespace SportsStore.Controllers
 {
     public class HomeController : Controller
     {
-        public int PageSize = 4;
+        public const int PageSize = 4;
 
-        private IStoreRepository repository;
+        private readonly IStoreRepository repository;
 
         public HomeController(IStoreRepository repository)
         {
@@ -22,16 +23,15 @@ namespace SportsStore.Controllers
             {
                 Products = this.repository.Products
                                .OrderBy(p => p.ProductId)
-                               .Skip((productPage - 1) * this.PageSize)
-                               .Take(this.PageSize),
+                               .Skip((productPage - 1) * PageSize)
+                               .Take(PageSize),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = productPage,
-                    ItemsPerPage = this.PageSize,
+                    ItemsPerPage = PageSize,
                     TotalItems = this.repository.Products.Count(),
                 },
             });
-
         }
     }
 }

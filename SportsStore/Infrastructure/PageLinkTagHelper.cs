@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -10,7 +11,7 @@ namespace SportsStore.Infrastructure
     [HtmlTargetElement("div", Attributes = "page-model")]
     public class PageLinkTagHelper : TagHelper
     {
-        private IUrlHelperFactory urlHelperFactory;
+        private readonly IUrlHelperFactory urlHelperFactory;
 
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
@@ -25,14 +26,13 @@ namespace SportsStore.Infrastructure
 
         public string? PageAction { get; set; }
 
-        public bool PageClassesEnabled { get; set; } = false;
+        public bool PageClassesEnabled { get; set; }
 
         public string PageClass { get; set; } = string.Empty;
 
         public string PageClassNormal { get; set; } = string.Empty;
 
         public string PageClassSelected { get; set; } = string.Empty;
-
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -44,9 +44,11 @@ namespace SportsStore.Infrastructure
                 for (int i = 1; i <= this.PageModel.TotalPages; i++)
                 {
                     TagBuilder tag = new TagBuilder("a");
-                    tag.Attributes["href"] = urlHelper.Action(this.PageAction,
+                    tag.Attributes["href"] = urlHelper.Action(
+                        this.PageAction,
                         new { productPage = i });
-                    tag.InnerHtml.Append(i.ToString());
+                    tag.InnerHtml.Append(i.ToString(CultureInfo.InvariantCulture));
+
                     result.InnerHtml.AppendHtml(tag);
                     
                     if (this.PageClassesEnabled)
@@ -56,6 +58,8 @@ namespace SportsStore.Infrastructure
                             ? this.PageClassSelected : this.PageClassNormal);
                     }
                 }
+
+                ArgumentNullException.ThrowIfNull(output);
 
                 output.Content.AppendHtml(result.InnerHtml);
             }

@@ -2,7 +2,7 @@
 {
     public class EFStoreRepository : IStoreRepository
     {
-        private StoreDbContext context;
+        private readonly StoreDbContext context;
 
         public EFStoreRepository(StoreDbContext ctx)
         {
@@ -12,4 +12,3 @@
         public IQueryable<Product> Products => this.context.Products;
     }
 }
-
