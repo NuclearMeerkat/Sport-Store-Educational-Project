@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Mvc;
+using SportsStore.Models.Repository;
 
 namespace SportsStore.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private IStoreRepository repository;
+
+        public HomeController(IStoreRepository repository)
         {
-            return View();
+            this.repository = repository;
         }
+
+        public IActionResult Index() => View(repository.Products);
     }
 }
