@@ -1,11 +1,14 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models.Repository;
+using SportsStore.Models.ViewModels;
 
 namespace SportsStore.Controllers
 {
     public class HomeController : Controller
     {
+        public int PageSize = 4;
+
         private IStoreRepository repository;
 
         public HomeController(IStoreRepository repository)
@@ -13,6 +16,22 @@ namespace SportsStore.Controllers
             this.repository = repository;
         }
 
-        public IActionResult Index() => View(repository.Products);
+        public ViewResult Index(int productPage = 1)
+        {
+            return this.View(new ProductsListViewModel
+            {
+                Products = this.repository.Products
+                               .OrderBy(p => p.ProductId)
+                               .Skip((productPage - 1) * this.PageSize)
+                               .Take(this.PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = productPage,
+                    ItemsPerPage = this.PageSize,
+                    TotalItems = this.repository.Products.Count(),
+                },
+            });
+
+        }
     }
 }
