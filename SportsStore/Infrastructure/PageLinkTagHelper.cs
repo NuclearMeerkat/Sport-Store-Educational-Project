@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -18,6 +19,11 @@ namespace SportsStore.Infrastructure
             this.urlHelperFactory = helperFactory;
         }
 
+        public string? PageRoute { get; set; }
+
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
+
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext? ViewContext { get; set; }
@@ -36,33 +42,27 @@ namespace SportsStore.Infrastructure
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (this.ViewContext != null && this.PageModel != null)
+            if (ViewContext != null && PageModel != null)
             {
-                IUrlHelper urlHelper = this.urlHelperFactory.GetUrlHelper(this.ViewContext);
+                IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
                 TagBuilder result = new TagBuilder("div");
-
-                for (int i = 1; i <= this.PageModel.TotalPages; i++)
+                for (int i = 1; i <= PageModel.TotalPages; i++)
                 {
                     TagBuilder tag = new TagBuilder("a");
-                    tag.Attributes["href"] = urlHelper.Action(
-                        this.PageAction,
-                        new { productPage = i });
-                    tag.InnerHtml.Append(i.ToString(CultureInfo.InvariantCulture));
-
-                    result.InnerHtml.AppendHtml(tag);
-                    
-                    if (this.PageClassesEnabled)
+                PageUrlValues[key: "productPage"] = i;
+                tag.Attributes[key: "href"] = urlHelper.Action(action: PageAction, values: PageUrlValues);
+                tag.Attributes[key: "href"] = urlHelper.RouteUrl(routeName: PageRoute, values: PageUrlValues);
+                    if (PageClassesEnabled)
                     {
-                        tag.AddCssClass(this.PageClass);
-                        tag.AddCssClass(i == this.PageModel.CurrentPage
-                            ? this.PageClassSelected : this.PageClassNormal);
+                        tag.AddCssClass(PageClass);
+                        tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
                     }
+                    tag.InnerHtml.Append(i.ToString());
+                    result.InnerHtml.AppendHtml(tag);
                 }
-
-                ArgumentNullException.ThrowIfNull(output);
-
                 output.Content.AppendHtml(result.InnerHtml);
             }
         }
+
     }
 }
