@@ -21,11 +21,11 @@ namespace SportsStore.Controllers
         [HttpGet]
         public IActionResult Index(string returnUrl)
         {
-           return View(new CartViewModel
-           {
-               ReturnUrl = returnUrl ?? "/",
-               Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart(),
-           });
+            return View(new CartViewModel
+            {
+                ReturnUrl = returnUrl ?? "/",
+                Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart(),
+            });
         }
 
         [HttpPost]
@@ -46,6 +46,19 @@ namespace SportsStore.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        [Route("Cart/Remove")]
+        public IActionResult Remove(long productId, string returnUrl)
+        {
+            Cart.RemoveLine(Cart.Lines.First(cl => cl.Product.ProductId == productId).Product);
+            return View("Index", new CartViewModel
+            {
+                Cart = Cart,
+                ReturnUrl = returnUrl ?? "/",
+            });
+        }
+
     }
 }
 
