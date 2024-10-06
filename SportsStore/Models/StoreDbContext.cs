@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace SportsStore.Models
 {
@@ -10,5 +11,7 @@ namespace SportsStore.Models
         }
 
         public DbSet<Product> Products => this.Set<Product>();
+
+        public DbSet<Order> Orders => this.Set<Order>();
     }
 }
