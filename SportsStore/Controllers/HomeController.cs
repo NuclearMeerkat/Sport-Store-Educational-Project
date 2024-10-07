@@ -16,7 +16,7 @@ namespace SportsStore.Controllers
         {
             this.repository = repository;
         }
-        
+
         public ViewResult Index(string? category, int productPage = 1)
               => this.View(new ProductsListViewModel
               {
@@ -31,9 +31,14 @@ namespace SportsStore.Controllers
                       ItemsPerPage = PageSize,
                       TotalItems = category == null ? this.repository.Products.Count() : this.repository.Products.Where(e => e.Category == category).Count(),
                   },
-  
+
                   CurrentCategory = category,
               });
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }
