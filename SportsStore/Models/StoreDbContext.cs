@@ -10,6 +10,11 @@ namespace SportsStore.Models
         {
         }
 
+        public StoreDbContext()
+        {
+            
+        }
+
         public DbSet<Product> Products => this.Set<Product>();
 
         public DbSet<Order> Orders => this.Set<Order>();
