@@ -23,6 +23,7 @@ namespace SportsStore.Controllers
             get;
 
             [HttpPost]
+            [ValidateAntiForgeryToken]
             set;
         }
 

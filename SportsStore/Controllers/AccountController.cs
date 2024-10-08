@@ -22,6 +22,7 @@ namespace SportsStore.Controllers
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ViewResult Login(Uri returnUrl)
         {
             if (this.ModelState.IsValid)
@@ -66,6 +67,7 @@ namespace SportsStore.Controllers
 
         [HttpPost]
         [Route("Logout")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout(Uri returnUrl)
         {
             if (this.ModelState.IsValid)
