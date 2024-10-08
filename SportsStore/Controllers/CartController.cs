@@ -20,7 +20,10 @@ namespace SportsStore.Controllers
         public Cart Cart
         {
             [HttpGet]
-            get; set;
+            get;
+
+            [HttpPost]
+            set;
         }
 
         [HttpGet]
