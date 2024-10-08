@@ -10,6 +10,8 @@ namespace SportsStore.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            ArgumentNullException.ThrowIfNull(migrationBuilder);
+
             migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
@@ -24,7 +26,7 @@ namespace SportsStore.Migrations
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Zip = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GiftWrap = table.Column<bool>(type: "bit", nullable: false)
+                    GiftWrap = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -39,7 +41,7 @@ namespace SportsStore.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
+                    OrderId = table.Column<int>(type: "int", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -71,6 +73,8 @@ namespace SportsStore.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            ArgumentNullException.ThrowIfNull(migrationBuilder);
+
             migrationBuilder.DropTable(
                 name: "CartLine");
 

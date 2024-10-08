@@ -16,9 +16,11 @@ namespace SportsStore.Controllers
             this.cart = cart;
         }
 
+        [HttpGet]
         public ViewResult Checkout() => this.View(new Order());
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Checkout(Order order)
         {
             ArgumentNullException.ThrowIfNull(order);

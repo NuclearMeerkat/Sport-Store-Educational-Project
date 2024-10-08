@@ -8,7 +8,6 @@ namespace SportsStore.Controllers
 {
     [Authorize]
     [Route("Account")]
-
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;

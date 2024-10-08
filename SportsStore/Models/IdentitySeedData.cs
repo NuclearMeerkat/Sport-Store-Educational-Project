@@ -10,8 +10,20 @@ namespace SportsStore.Models
 
         public static async Task EnsurePopulated(IApplicationBuilder app)
         {
-            ArgumentNullException.ThrowIfNull(app);
+            // Parameter check in a separate method
+            ValidateParameters(app);
 
+            await PopulateIdentityDataAsync(app);
+        }
+
+        private static void ValidateParameters(IApplicationBuilder app)
+        {
+            ArgumentNullException.ThrowIfNull(app);
+        }
+
+        // Method for handling async logic
+        private static async Task PopulateIdentityDataAsync(IApplicationBuilder app)
+        {
             AppIdentityDbContext context = app.ApplicationServices
                 .CreateScope().ServiceProvider
                 .GetRequiredService<AppIdentityDbContext>();
@@ -30,7 +42,7 @@ namespace SportsStore.Models
 
             if (user is null)
             {
-                user = new IdentityUser("Admin")
+                user = new IdentityUser(AdminUser)
                 {
                     Email = "admin@example.com",
                     PhoneNumber = "555-1234",

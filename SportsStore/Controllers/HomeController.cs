@@ -17,6 +17,7 @@ namespace SportsStore.Controllers
             this.repository = repository;
         }
 
+        [HttpGet]
         public ViewResult Index(string? category, int productPage = 1)
         {
             if (this.ModelState.IsValid)
@@ -42,6 +43,7 @@ namespace SportsStore.Controllers
             return this.View();
         }
 
+        [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -10,6 +10,8 @@ namespace SportsStore.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            ArgumentNullException.ThrowIfNull(migrationBuilder);
+
             migrationBuilder.AddColumn<bool>(
                 name: "Shipped",
                 table: "Orders",
@@ -21,6 +23,8 @@ namespace SportsStore.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            ArgumentNullException.ThrowIfNull(migrationBuilder);
+
             migrationBuilder.DropColumn(
                 name: "Shipped",
                 table: "Orders");

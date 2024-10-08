@@ -16,17 +16,21 @@ namespace SportsStore.Controllers
         public AdminController(IStoreRepository storeRepository, IOrderRepository orderRepository)
             => (this.storeRepository, this.orderRepository) = (storeRepository, orderRepository);
 
+        [HttpGet]
         [Route("Orders")]
         public ViewResult Orders() => this.View(this.orderRepository.Orders);
 
+        [HttpGet]
         [Route("Products")]
         public ViewResult Products() => this.View(this.storeRepository.Products);
 
+        [HttpGet]
         [Route("Details/{productId:int}")]
         [ValidateModel]
         public ViewResult Details(int productId)
             => this.View(this.storeRepository.Products.FirstOrDefault(p => p.ProductId == productId));
 
+        [HttpGet]
         [Route("Products/Edit/{productId:long}")]
         [ValidateModel]
         public ViewResult Edit(int productId)
@@ -36,6 +40,7 @@ namespace SportsStore.Controllers
 
         [HttpPost]
         [Route("Products/Edit/{productId:long}")]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(Product product)
         {
             if (this.ModelState.IsValid)
@@ -47,6 +52,7 @@ namespace SportsStore.Controllers
             return this.View(product);
         }
 
+        [HttpGet]
         [Route("Products/Create")]
         public ViewResult Create()
         {
@@ -56,6 +62,7 @@ namespace SportsStore.Controllers
         [HttpPost]
         [Route("Products/Create")]
         [ValidateModel]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Product product)
         {
             if (this.ModelState.IsValid)
@@ -70,6 +77,7 @@ namespace SportsStore.Controllers
         [HttpPost]
         [Route("MarkShipped")]
         [ValidateModel]
+        [ValidateAntiForgeryToken]
         public IActionResult MarkShipped(int orderId)
         {
             Order? order = this.orderRepository.Orders.FirstOrDefault(o => o.OrderId == orderId);
@@ -86,6 +94,7 @@ namespace SportsStore.Controllers
         [HttpPost]
         [Route("Reset")]
         [ValidateModel]
+        [ValidateAntiForgeryToken]
         public IActionResult Reset(int orderId)
         {
             Order? order = this.orderRepository.Orders.FirstOrDefault(o => o.OrderId == orderId);
@@ -99,6 +108,7 @@ namespace SportsStore.Controllers
             return this.RedirectToAction("Orders");
         }
 
+        [HttpGet]
         [Route("Products/Delete/{productId:long}")]
         [ValidateModel]
         public IActionResult Delete(int productId)
@@ -107,6 +117,7 @@ namespace SportsStore.Controllers
         [HttpPost]
         [Route("Products/Delete/{productId:long}")]
         [ValidateModel]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteProduct(int productId)
         {
             var product = this.storeRepository.Products.FirstOrDefault(p => p.ProductId == productId);

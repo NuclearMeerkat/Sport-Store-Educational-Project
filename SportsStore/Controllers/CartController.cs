@@ -17,7 +17,11 @@ namespace SportsStore.Controllers
             this.Cart = cart;
         }
 
-        public Cart Cart { get; set; }
+        public Cart Cart
+        {
+            [HttpGet]
+            get; set;
+        }
 
         [HttpGet]
         [ValidateModel]
@@ -32,6 +36,7 @@ namespace SportsStore.Controllers
 
         [HttpPost]
         [ValidateModel]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(long productId, Uri returnUrl)
         {
             Product? product = this.repository.Products.FirstOrDefault(p => p.ProductId == productId);
@@ -53,6 +58,7 @@ namespace SportsStore.Controllers
         [HttpPost]
         [Route("Cart/Remove")]
         [ValidateModel]
+        [ValidateAntiForgeryToken]
         public IActionResult Remove(long productId, Uri returnUrl)
         {
             this.Cart.RemoveLine(this.Cart.Lines.First(cl => cl.Product.ProductId == productId).Product);
