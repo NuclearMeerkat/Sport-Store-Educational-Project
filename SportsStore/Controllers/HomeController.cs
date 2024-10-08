@@ -18,27 +18,34 @@ namespace SportsStore.Controllers
         }
 
         public ViewResult Index(string? category, int productPage = 1)
-              => this.View(new ProductsListViewModel
-              {
-                  Products = this.repository.Products
-                  .Where(p => category == null || p.Category == category)
-                  .OrderBy(p => p.ProductId)
-                  .Skip((productPage - 1) * PageSize)
-                  .Take(PageSize),
-                  PagingInfo = new PagingInfo
-                  {
-                      CurrentPage = productPage,
-                      ItemsPerPage = PageSize,
-                      TotalItems = category == null ? this.repository.Products.Count() : this.repository.Products.Where(e => e.Category == category).Count(),
-                  },
+        {
+            if (this.ModelState.IsValid)
+            {
+                return this.View(new ProductsListViewModel
+                {
+                    Products = this.repository.Products
+                          .Where(p => category == null || p.Category == category)
+                          .OrderBy(p => p.ProductId)
+                          .Skip((productPage - 1) * PageSize)
+                          .Take(PageSize),
+                    PagingInfo = new PagingInfo
+                    {
+                        CurrentPage = productPage,
+                        ItemsPerPage = PageSize,
+                        TotalItems = category == null ? this.repository.Products.Count() : this.repository.Products.Where(e => e.Category == category).Count(),
+                    },
 
-                  CurrentCategory = category,
-              });
+                    CurrentCategory = category,
+                });
+            }
+
+            return this.View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View();
+            return this.View();
         }
     }
 }

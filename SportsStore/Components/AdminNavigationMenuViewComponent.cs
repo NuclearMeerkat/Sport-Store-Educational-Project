@@ -4,11 +4,13 @@ namespace SportsStore.Components
 {
     public class AdminNavigationMenuViewComponent : ViewComponent
     {
+        private static readonly string[] Model = new string[] { "Orders", "Products" };
+
         public IViewComponentResult Invoke()
         {
-            ViewBag.Selection = Request.Path.Value ?? "Products";
+            this.ViewBag.Selection = this.Request.Path.Value ?? "Products";
 
-            return View(new string[] { "Orders", "Products" });
+            return this.View(Model);
         }
     }
 }

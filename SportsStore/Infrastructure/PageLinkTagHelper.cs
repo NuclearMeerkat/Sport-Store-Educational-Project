@@ -22,7 +22,7 @@ namespace SportsStore.Infrastructure
         public string? PageRoute { get; set; }
 
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
-        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> PageUrlValues { get; } = new Dictionary<string, object>();
 
         [ViewContext]
         [HtmlAttributeNotBound]
@@ -42,27 +42,29 @@ namespace SportsStore.Infrastructure
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (ViewContext != null && PageModel != null)
+            if (this.ViewContext != null && this.PageModel != null)
             {
-                IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
+                IUrlHelper urlHelper = this.urlHelperFactory.GetUrlHelper(this.ViewContext);
                 TagBuilder result = new TagBuilder("div");
-                for (int i = 1; i <= PageModel.TotalPages; i++)
+                for (int i = 1; i <= this.PageModel.TotalPages; i++)
                 {
                     TagBuilder tag = new TagBuilder("a");
-                PageUrlValues[key: "productPage"] = i;
-                tag.Attributes[key: "href"] = urlHelper.Action(action: PageAction, values: PageUrlValues);
-                tag.Attributes[key: "href"] = urlHelper.RouteUrl(routeName: PageRoute, values: PageUrlValues);
-                    if (PageClassesEnabled)
+                    this.PageUrlValues[key: "productPage"] = i;
+                    tag.Attributes[key: "href"] = urlHelper.Action(action: this.PageAction, values: this.PageUrlValues);
+                    tag.Attributes[key: "href"] = urlHelper.RouteUrl(routeName: this.PageRoute, values: this.PageUrlValues);
+                    if (this.PageClassesEnabled)
                     {
-                        tag.AddCssClass(PageClass);
-                        tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
+                        tag.AddCssClass(this.PageClass);
+                        tag.AddCssClass(i == this.PageModel.CurrentPage ? this.PageClassSelected : this.PageClassNormal);
                     }
-                    tag.InnerHtml.Append(i.ToString());
+
+                    tag.InnerHtml.Append(i.ToString(CultureInfo.InvariantCulture));
                     result.InnerHtml.AppendHtml(tag);
                 }
+
+                ArgumentNullException.ThrowIfNull(output);
                 output.Content.AppendHtml(result.InnerHtml);
             }
         }
-
     }
 }

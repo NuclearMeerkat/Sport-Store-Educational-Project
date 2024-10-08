@@ -4,7 +4,7 @@ namespace SportsStore.Models.Repository
 {
     public class EFOrderRepository : IOrderRepository
     {
-        private StoreDbContext context;
+        private readonly StoreDbContext context;
 
         public EFOrderRepository(StoreDbContext context)
         {
@@ -17,14 +17,15 @@ namespace SportsStore.Models.Repository
 
         public void SaveOrder(Order order)
         {
-            context.AttachRange(order.Lines.Select(l => l.Product));
+            ArgumentNullException.ThrowIfNull(order);
+            this.context.AttachRange(order.Lines.Select(l => l.Product));
 
             if (order.OrderId == 0)
             {
-                context.Orders.Add(order);
+                this.context.Orders.Add(order);
             }
 
-            context.SaveChanges();
+            this.context.SaveChanges();
         }
     }
 }

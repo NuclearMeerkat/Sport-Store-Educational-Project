@@ -9,7 +9,7 @@ namespace SportsStore.Models.ViewModels
 
         [Required]
         public string? Password { get; set; }
-
-        public string ReturnUrl { get; set; } = "/";
+        
+        public Uri? ReturnUrl { get; set; } = new Uri("/", UriKind.Relative);
     }
 }

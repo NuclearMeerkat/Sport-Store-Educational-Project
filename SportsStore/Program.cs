@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SportsStore.Filters;
 using SportsStore.Models;
 using SportsStore.Models.Repository;
 
@@ -14,7 +15,6 @@ builder.Services.AddDbContext<StoreDbContext>(opts =>
 
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
 builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
-
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddScoped<Cart>(SessionCart.GetCart);
@@ -80,6 +80,6 @@ app.MapControllerRoute(
 app.MapDefaultControllerRoute();
 
 SeedData.EnsurePopulated(app);
-IdentitySeedData.EnsurePopulated(app);
+await IdentitySeedData.EnsurePopulated(app);
 
 await app.RunAsync();
