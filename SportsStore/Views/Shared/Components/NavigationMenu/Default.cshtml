@@ -6,9 +6,11 @@
     </a>
     @foreach (string category in Model ?? Enumerable.Empty<string>())
     {
-        <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary": "btn-outline-secondary")"
-           asp-route="category" asp-route-category="@category">
-            @category
-        </a>
+        <li class="d-grid gap-2">
+            <a class="btn @(category == ViewBag.SelectedCategory ? "btn-primary": "btn-outline-secondary")"
+               asp-route="category" asp-route-category="@category">
+                @category
+            </a>
+        </li>
     }
 </div>

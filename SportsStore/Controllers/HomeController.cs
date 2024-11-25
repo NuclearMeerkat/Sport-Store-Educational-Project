@@ -8,7 +8,7 @@ namespace SportsStore.Controllers
 {
     public class HomeController : Controller
     {
-        public const int PageSize = 4;
+        public const int PageSize = 6;
 
         private readonly IStoreRepository repository;
 
