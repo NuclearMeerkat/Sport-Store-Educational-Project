@@ -18,6 +18,7 @@ namespace SportsStore.Controllers
             this.signInManager = signInManager;
         }
 
+        [HttpGet]
         [Route("Login")]
         [AllowAnonymous]
         public ViewResult Login(string returnUrl = "/")
@@ -32,7 +33,7 @@ namespace SportsStore.Controllers
         [Route("Login")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginForm(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             if (ModelState.IsValid)
             {
