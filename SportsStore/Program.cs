@@ -32,6 +32,8 @@ if (app.Environment.IsProduction())
 app.UseStatusCodePages();
 app.UseStaticFiles();
 
+SeedData.EnsurePopulated(app);
+await IdentitySeedData.EnsurePopulated(app);
 app.UseSession();
 
 app.UseAuthentication();
@@ -79,7 +81,5 @@ app.MapControllerRoute(
 
 app.MapDefaultControllerRoute();
 
-SeedData.EnsurePopulated(app);
-await IdentitySeedData.EnsurePopulated(app);
 
 await app.RunAsync();

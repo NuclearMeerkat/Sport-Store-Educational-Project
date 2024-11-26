@@ -23,7 +23,7 @@ namespace SportsStore.Models
                         Description = "A boat for one person",
                         Category = "Watersports",
                         Price = 275,
-                        PictureUrl = "https://w7.pngwing.com/pngs/420/270/png-transparent-boat-sea-kayak-recreational-kayak-watercraft-paddle-sports-equipment-vehicle-sports-thumbnail.png",
+                        PictureUrl = "https://w7.pngwing.com/pngs/420/270/png-transparent-boat-sea-kayak-recreational-kayak-watercraft-paddle-sports-equipment-vehicle-sports-thumbnail",
                     },
                     new Product
                     {

@@ -1,14 +1,14 @@
 ﻿@model ProductsListViewModel
-
+<script src="/font-awesome/js/ThemeChanger.js"> </script>
 @{
     var route = this.Model.CurrentCategory is null ? "pagination" : "categoryPage";
 }
 
-<div class="container">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<div class="container bg-light">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-md-2 ">
         @foreach (var p in Model?.Products ?? Enumerable.Empty<Product>())
         {
-            <div class="col">
+            <div class="col w-50 bg-dark text-dark">
                 <partial name="_ProductSummary" model="p" />
             </div>
         }
@@ -19,7 +19,7 @@
 <div class="d-flex justify-content-center my-3">
     <div page-model="@Model?.PagingInfo" page-classes-enabled="true" page-route=@route
          page-class="btn" page-class-normal="btn-outline-dark"
-         page-class-selected="btn-primary" page-url-category="@Model?.CurrentCategory!"
+         page-class-selected="btn-dark" page-url-category="@Model?.CurrentCategory!"
          class="btn-group">
     </div>
 </div>
