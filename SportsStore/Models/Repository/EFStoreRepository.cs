@@ -41,6 +41,7 @@
                     dbEntry.Description = p.Description;
                     dbEntry.Price = p.Price;
                     dbEntry.Category = p.Category;
+                    dbEntry.PictureUrl = p.PictureUrl;
                 }
             }
 
