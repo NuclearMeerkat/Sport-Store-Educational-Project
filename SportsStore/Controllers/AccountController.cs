@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SportsStore.Filters;
 using SportsStore.Models.ViewModels;
 
 namespace SportsStore.Controllers
 {
-    [Authorize]
     [Route("Account")]
+    
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private UserManager<IdentityUser> userManager;
+        private SignInManager<IdentityUser> signInManager;
 
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -19,64 +18,47 @@ namespace SportsStore.Controllers
             this.signInManager = signInManager;
         }
 
-        [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ViewResult Login(Uri returnUrl)
+        public ViewResult Login(string returnUrl = "/")
         {
-            if (this.ModelState.IsValid)
+            return View(new LoginViewModel
             {
-                return this.View(new LoginViewModel
-                {
-                    ReturnUrl = returnUrl,
-                });
-            }
-            
-            return this.View();
+                ReturnUrl = returnUrl,
+            });
         }
 
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [ValidateModel]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> LoginForm(LoginViewModel loginViewModel)
         {
-            if (loginViewModel is null || loginViewModel.Name is null || loginViewModel.Password is null)
+            if (ModelState.IsValid)
             {
-                return this.View(loginViewModel);
-            }
+                IdentityUser user = await userManager.FindByNameAsync(loginViewModel.Name);
 
-            IdentityUser? user = await this.userManager.FindByNameAsync(loginViewModel.Name);
-
-            if (user != null)
-            {
-                await this.signInManager.SignOutAsync();
-
-                if ((await this.signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false)).Succeeded)
+                if (user != null)
                 {
-                    return this.RedirectToAction("Products", "Admin");
+                    await signInManager.SignOutAsync();
+
+                    if ((await signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false)).Succeeded)
+                    {
+                        return RedirectToAction("Products", "Admin");
+                    }
                 }
+
+                ModelState.AddModelError(string.Empty, "Invalid name or password.");
             }
 
-            this.ModelState.AddModelError(string.Empty, "Invalid name or password.");
-
-            return this.View(loginViewModel);
+            return View(loginViewModel);
         }
 
-        [HttpPost]
         [Route("Logout")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout(Uri returnUrl)
+        public async Task<IActionResult> Logout(string returnUrl = "/")
         {
-            if (this.ModelState.IsValid)
-            {
-                await this.signInManager.SignOutAsync();
-                return this.RedirectToAction("Login", returnUrl);
-            }
-
-            return this.RedirectToAction("Index", "Home");
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Login", returnUrl);
         }
     }
 }
