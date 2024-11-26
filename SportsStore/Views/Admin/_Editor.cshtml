@@ -36,6 +36,11 @@
                 <input asp-for="@product.Category" class="form-control" />
                 <span asp-validation-for="@product.Category" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="@product.PictureUrl" class="control-label"></label>
+                <input asp-for="@product.PictureUrl" class="form-control" />
+                <span asp-validation-for="@product.PictureUrl" class="text-danger"></span>
+            </div>
             <div class="mt-2">
                 <button type="submit" class="btn btn-@Model.ThemeColor">Save</button>
                 <a class="btn btn-secondary" asp-controller="Admin" asp-action="Products">Cancel</a>
