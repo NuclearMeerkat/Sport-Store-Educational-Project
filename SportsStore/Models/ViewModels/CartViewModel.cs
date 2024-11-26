@@ -4,6 +4,6 @@
     {
         public Cart? Cart { get; set; } = new();
 
-        public Uri ReturnUrl { get; set; } = new Uri("/", UriKind.Relative);
+        public string ReturnUrl { get; set; } = "/";
     }
 }

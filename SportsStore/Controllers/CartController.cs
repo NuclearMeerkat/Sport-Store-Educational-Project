@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SportsStore.Filters;
 using SportsStore.Infrastructure;
 using SportsStore.Models;
 using SportsStore.Models.Repository;
@@ -9,7 +8,7 @@ namespace SportsStore.Controllers
 {
     public class CartController : Controller
     {
-        private readonly IStoreRepository repository;
+        private IStoreRepository repository;
 
         public CartController(IStoreRepository repository, Cart cart)
         {
@@ -17,60 +16,35 @@ namespace SportsStore.Controllers
             this.Cart = cart;
         }
 
-        public Cart Cart
-        {
-            [HttpGet]
-            get;
-
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            set;
-        }
+        public Cart Cart { get; set; }
 
         [HttpGet]
-        [ValidateModel]
-        public IActionResult Index(Uri returnUrl)
+        public IActionResult Index(string returnUrl)
         {
-            return this.View(new CartViewModel
+            return View(new CartViewModel
             {
-                ReturnUrl = returnUrl ?? new Uri("/", UriKind.Relative),
-                Cart = this.HttpContext.Session.GetJson<Cart>("cart") ?? new Cart(),
+                ReturnUrl = returnUrl ?? "/",
+                Cart = this.Cart
             });
         }
 
         [HttpPost]
-        [ValidateModel]
-        [ValidateAntiForgeryToken]
-        public IActionResult Index(long productId, Uri returnUrl)
+        public IActionResult Index(long productId, string returnUrl)
         {
-            Product? product = this.repository.Products.FirstOrDefault(p => p.ProductId == productId);
+            Product? product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
 
             if (product != null)
             {
                 this.Cart.AddItem(product, 1);
 
-                return this.View(new CartViewModel
+                return View(new CartViewModel
                 {
                     Cart = this.Cart,
-                    ReturnUrl = returnUrl,
+                    ReturnUrl = returnUrl
                 });
             }
 
-            return this.RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
-        [Route("Cart/Remove")]
-        [ValidateModel]
-        [ValidateAntiForgeryToken]
-        public IActionResult Remove(long productId, Uri returnUrl)
-        {
-            this.Cart.RemoveLine(this.Cart.Lines.First(cl => cl.Product.ProductId == productId).Product);
-            return this.View("Index", new CartViewModel
-            {
-                Cart = this.Cart,
-                ReturnUrl = returnUrl ?? new Uri("/", UriKind.Relative),
-            });
+            return RedirectToAction("Index", "Home");
         }
     }
 }
