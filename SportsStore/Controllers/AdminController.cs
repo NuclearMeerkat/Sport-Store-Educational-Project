@@ -31,6 +31,12 @@ namespace SportsStore.Controllers
             => this.View(this.storeRepository.Products.FirstOrDefault(p => p.ProductId == productId));
 
         [HttpGet]
+        [Route("OrderDetails/{orderId:int}")]
+        [ValidateModel]
+        public ViewResult OrderDetails(int orderId)
+            => this.View(this.orderRepository.Orders.FirstOrDefault(p => p.OrderId == orderId));
+
+        [HttpGet]
         [Route("Products/Edit/{productId:long}")]
         [ValidateModel]
         public ViewResult Edit(int productId)

@@ -7,13 +7,18 @@
     <tbody>
         @if (Model.Orders.Any())
         {
+            <tr>
+                <th scope="col">Client Name</th>
+                <th scope="col">Order Price</th>
+                <th scope="col">Zip</th>
+            </tr>
+
             @foreach (Order o in Model.Orders)
             {
                 <tr>
                     <td>@o.Name</td>
+                    <td>@o.Lines.Sum(line => line.Quantity * line.Product.Price)</td>
                     <td>@o.Zip</td>
-                    <th scope="col">Product</th>
-                    <th scope="col">Quantity</th>
                     <td>
                         <form asp-action=@Model.CallbackMethodName method="post">
                             <input type="hidden" name="OrderId" value="@o.OrderId" />
@@ -22,16 +27,12 @@
                             </button>
                         </form>
                     </td>
+                    <td>
+                        <a class="btn btn-info btn-sm" asp-controller="Admin" asp-action="OrderDetails" asp-route-orderId="@o.OrderId">
+                            Details
+                        </a>
+                    </td>
                 </tr>
-                @foreach (CartLine line in o.Lines)
-                {
-                    <tr>
-                        <td colspan="2"></td>
-                        <td>@line.Product.Name</td>
-                        <td>@line.Quantity</td>
-                        <td></td>
-                    </tr>
-                }
             }
         }
         else

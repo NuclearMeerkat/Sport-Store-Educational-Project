@@ -10,5 +10,5 @@
 <partial name="_OrderTable" model='(shippedOrders, "Shipped Orders", "Reset", "Reset")' />
 
 <form asp-action="Orders" method="post">
-    <button class="btn btn-info">Refresh Data</button>
+    <button class="btn btn-info" asp-controller="Admin" asp-action="Orders">Refresh Data</button>
 </form>
