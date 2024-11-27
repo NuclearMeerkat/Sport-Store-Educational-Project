@@ -1,36 +1,33 @@
 ﻿@model Product
 
-<div class="card mb-4 p-3">
-    <div class="row align-items-center">
-        <!-- Блок зображення -->
-        <div class="col-md-3 text-center">
-            <img src="@Model?.PictureUrl" alt="Product Image" class="img-fluid rounded" style="width: 150px; height: auto;">
+<div class="card mb-4 p-3 w-100 m-3 h-100">
+    <div class="row g-0 h-100">
+        <!-- Image Block -->
+        <div class="col-12 col-md-4 text-center p-2 d-flex align-items-center justify-content-center ">
+            <img src="@Model?.PictureUrl" alt="Product Image" class="img-fluid rounded"
+                 style="max-height: 150px; object-fit: cover;">
         </div>
 
-        <!-- Блок інформації про продукт -->
-        <div class="col-md-6">
-            <h4>
-                @Model?.Name
-            </h4>
-            <p class="text-muted">@Model?.Description</p>
+        <!-- Product Info Block -->
+        <div class="col-12 col-md-5 text-start p-3 d-flex flex-column justify-content-between">
+            <div>
+                <h4>@Model?.Name</h4>
+                <p class="text-muted">@Model?.Description</p>
+            </div>
+        </div>
 
-            <div class="mb-2">
+        <!-- Price and Button Block -->
+        <div class="col-12 col-md-3 text-start p-3 d-flex flex-column justify-content-between">
+            <div>
                 <span class="fw-bold">Price:</span>
                 <span class="badge bg-primary text-white">@Model?.Price.ToString("c")</span>
             </div>
+            <form id="@Model?.ProductId" asp-controller="Cart" asp-antiforgery="true" class="mt-auto">
+                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                <button type="submit" class="btn btn-success btn-sm w-100">Add To Cart</button>
+            </form>
         </div>
-        <!-- Блок ціни, кількості та кнопок -->
-        <form id="@Model?.ProductId" asp-controller="Cart" asp-antiforgery="true">
-            <input type="hidden" asp-for="ProductId" />
-            <input type="hidden" name="returnUrl"
-                   value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-            <span class="card-text p-1">
-                @Model?.Description
-                <button type="submit"
-                        class="btn btn-success btn-sm pull-right" style="float:right">
-                    Add To Cart
-                </button>
-            </span>
-        </form>
     </div>
 </div>
+

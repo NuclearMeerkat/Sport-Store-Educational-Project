@@ -4,11 +4,11 @@
     var route = this.Model.CurrentCategory is null ? "pagination" : "categoryPage";
 }
 
-<div class="container bg-light">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-md-2 ">
+<div class="container-fluid bg-light justify-content-center align-self-start items">
+    <div class="row row-cols-sm-1 row-cols-md-2 row-cols-md-2 ">
         @foreach (var p in Model?.Products ?? Enumerable.Empty<Product>())
         {
-            <div class="col w-50 bg-dark text-dark">
+            <div class="col w-50 h-auto mb-3">
                 <partial name="_ProductSummary" model="p" />
             </div>
         }
@@ -16,7 +16,7 @@
 </div>
 
 
-<div class="d-flex justify-content-center my-3">
+<div class="d-flex justify-content-center my-3 p-3">
     <div page-model="@Model?.PagingInfo" page-classes-enabled="true" page-route=@route
          page-class="btn" page-class-normal="btn-outline-dark"
          page-class-selected="btn-dark" page-url-category="@Model?.CurrentCategory!"
