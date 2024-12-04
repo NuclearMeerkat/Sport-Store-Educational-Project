@@ -9,6 +9,6 @@
 <partial name="_OrderTable" model='(unshippedOrders, "Unshipped Orders", "Ship", "MarkShipped")' />
 <partial name="_OrderTable" model='(shippedOrders, "Shipped Orders", "Reset", "Reset")' />
 
-<form asp-action="Orders" method="post">
+<form asp-action="Orders" method="get">
     <button class="btn btn-info" asp-controller="Admin" asp-action="Orders">Refresh Data</button>
 </form>
