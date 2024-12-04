@@ -46,5 +46,18 @@ namespace SportsStore.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        public IActionResult Remove(long productId, string returnUrl)
+        {
+            Product? product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
+
+            if (product != null)
+            {
+                this.Cart.RemoveLine(product);
+            }
+
+            return RedirectToAction("Index", new { returnUrl });
+        }
     }
 }
