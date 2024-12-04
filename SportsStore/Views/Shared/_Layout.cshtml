@@ -1,51 +1,57 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xml:lang="en" class="bg-dark">
-<head>
+<html lang="en" xml:lang="en">
+<head >
     <meta name="viewport" content="width=device-width" />
     <title>SportsStore</title>
     <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
    <link href="/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+   <link href="/hover/HoverStyle.css" rel="stylesheet" />
     <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/font-awesome/js/ThemeChanger.js"> </script>
 </head>
-<body class="bg-light">
-    <header class="bg-dark text-light">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
+<body class="bg-dark text-light" style="background-color: #363C46 !important; color: #F8F0E5 !important;">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" style="color: #F8F0E5 !important;">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Sport Store</a>
+                <a class="navbar-brand" style="color: #F8F0E5!important" asp-area="" asp-controller="Home" asp-action="Index">Sport Store</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center" style="color: #F8F0E5!important">
+                    <ul class="navbar-nav flex-grow-1" >
 
-                        <li class="nav-item dropdown text-dark">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" onclick="ChangeTheme()" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #F8F0E5 !important;">
                                 Products
                             </a>
-                            <ul class="dropdown-menu p-2">
+                            <ul class="dropdown-menu p-2" style="background-color: #363C46 !important;">
                                 <vc:navigation-menu />
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login" style="color: #F8F0E5 !important;">Login</a>
                         </li>
-                        <li class="col-6 navbar-text align-self-end text-end">
+                        <li class="nav-item navbar-text ms-auto text-end">
                             <vc:cart-summary />
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="form-check form-switch visually-hidden">
+            <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="btnSwitch" role="switch">
                 <label class="form-check-label bg-dark" for="flexSwitchCheckDefault"></label>
             </div>
 
         </nav>
     </header>
-    <div class="container text-center w-100 ">
+    <div class="container text-center w-100 flex-grow-1">
         @RenderBody()
     </div>
+    <footer class="border-top footer text-muted " style="min-height:50px; position:sticky">
+        <div class="container" style="color: #F8F0E5 !important;">
+            &copy; 2024 - Sport Shop - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
 </body>
 </html>

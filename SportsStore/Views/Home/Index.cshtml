@@ -4,7 +4,7 @@
     var route = this.Model.CurrentCategory is null ? "pagination" : "categoryPage";
 }
 
-<div class="container-fluid bg-light justify-content-center align-self-start items">
+<div class="container-fluid bg-light justify-content-center align-self-start items" style="background-color: #363C46 !important; color: #F8F0E5 !important;">
     <div class="row row-cols-sm-1 row-cols-md-2 row-cols-md-2 ">
         @foreach (var p in Model?.Products ?? Enumerable.Empty<Product>())
         {
@@ -16,11 +16,16 @@
 </div>
 
 
-<div class="d-flex justify-content-center my-3 p-3">
-    <div page-model="@Model?.PagingInfo" page-classes-enabled="true" page-route=@route
-         page-class="btn" page-class-normal="btn-outline-dark"
-         page-class-selected="btn-dark" page-url-category="@Model?.CurrentCategory!"
-         class="btn-group">
+<div class="d-flex justify-content-center my-3 p-3" style="background-color: #363C46 !important; color: #F8F0E5 !important; border-color: #F8F0E5;">
+    <div page-model="@Model?.PagingInfo"
+         page-classes-enabled="true"
+         page-route="@route"
+         page-class="btn"
+         page-class-normal="btn-outline-light" 
+         page-class-selected="btn-dark btn-outline-light"
+         page-url-category="@Model?.CurrentCategory!"
+         class="btn-group"
+         style="background-color: #363C46 !important; color: #F8F0E5 !important; border-color: #F8F0E5;">
     </div>
 </div>
 

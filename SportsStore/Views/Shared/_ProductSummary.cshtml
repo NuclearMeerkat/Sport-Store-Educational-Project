@@ -1,7 +1,7 @@
 ﻿@model Product
 
-<div class="card mb-4 p-3 w-100 m-3 h-100">
-    <div class="row g-0 h-100">
+<div class="card b-2  p-3 w-100 m-3 h-100" style="background-color: #363C46 !important; color: #F8F0E5 !important; border-color: #F8F0E5 !important;">
+    <div class="row g-0 h-100" >
         <!-- Image Block -->
         <div class="col-12 col-md-4 text-center p-2 d-flex align-items-center justify-content-center ">
             <img src="@Model?.PictureUrl" alt="Product Image" class="img-fluid rounded"
@@ -12,12 +12,12 @@
         <div class="col-12 col-md-5 text-start p-3 d-flex flex-column justify-content-between">
             <div>
                 <h4>@Model?.Name</h4>
-                <p class="text-muted">@Model?.Description</p>
+                <p class="text-muted" style=" color: #F8F0E5 !important;">@Model?.Description</p>
             </div>
         </div>
 
         <!-- Price and Button Block -->
-        <div class="col-12 col-md-3 text-start p-3 d-flex flex-column justify-content-between">
+        <div class="col-12 col-md-3 text-start p-3 d-flex flex-column justify-content-between" style=" color: #F8F0E5 !important;">
             <div>
                 <span class="fw-bold">Price:</span>
                 <span class="badge bg-primary text-white">@Model?.Price.ToString("c")</span>
